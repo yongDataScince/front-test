@@ -1,0 +1,54 @@
+$icons: (
+  // EXAMPLE
+  // icon: (
+  //   width: WIDTH_IN_PIXELS,
+  //   height: HEIGHT_IN_PIXELS,
+  //   icon: URL_ENCODED_SVG,
+  // ),
+);
+
+$maskedIcons: (
+  cart: (
+    width: 34px,
+    height: 33px,
+    icon:
+      "data:image/svg+xml,%3Csvg width='34' height='33' viewBox='0 0 34 33' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M7.84 4.48C8.06663 4.17783 8.42229 4 8.8 4H23.2C23.5777 4 23.9334 4.17783 24.16 4.48L27.76 9.28C27.9158 9.48772 28 9.74036 28 10V26.8C28 27.7548 27.6207 28.6705 26.9456 29.3456C26.2705 30.0207 25.3548 30.4 24.4 30.4H7.6C6.64522 30.4 5.72955 30.0207 5.05442 29.3456C4.37928 28.6705 4 27.7548 4 26.8V10C4 9.74036 4.08421 9.48772 4.24 9.28L7.84 4.48ZM9.4 6.4L6.4 10.4V26.8C6.4 27.1183 6.52643 27.4235 6.75147 27.6485C6.97652 27.8736 7.28174 28 7.6 28H24.4C24.7183 28 25.0235 27.8736 25.2485 27.6485C25.4736 27.4235 25.6 27.1183 25.6 26.8V10.4L22.6 6.4H9.4Z' fill='%231F1F1F'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4 10C4 9.33726 4.53726 8.8 5.2 8.8H26.8C27.4627 8.8 28 9.33726 28 10C28 10.6627 27.4627 11.2 26.8 11.2H5.2C4.53726 11.2 4 10.6627 4 10Z' fill='%231F1F1F'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.2 13.6C11.8627 13.6 12.4 14.1373 12.4 14.8C12.4 15.7548 12.7793 16.6705 13.4544 17.3456C14.1295 18.0207 15.0452 18.4 16 18.4C16.9548 18.4 17.8705 18.0207 18.5456 17.3456C19.2207 16.6705 19.6 15.7548 19.6 14.8C19.6 14.1373 20.1373 13.6 20.8 13.6C21.4627 13.6 22 14.1373 22 14.8C22 16.3913 21.3679 17.9174 20.2426 19.0426C19.1174 20.1679 17.5913 20.8 16 20.8C14.4087 20.8 12.8826 20.1679 11.7574 19.0426C10.6321 17.9174 10 16.3913 10 14.8C10 14.1373 10.5373 13.6 11.2 13.6Z' fill='%231F1F1F'/%3E%3C/svg%3E",    color: #1F1F1F
+  ),
+  little-chevron: (
+    width: 5px,
+    height: 2.5px,
+    icon:
+      "data:image/svg+xml,%3Csvg width='5' height='3' viewBox='0 0 5 3' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0H0L2.5 2.5L5 0Z' fill='%2359606D'/%3E%3C/svg%3E",
+    color: #59606D
+  )
+);
+
+.icon {
+  display: block;
+}
+
+@each $label, $icon in $icons {
+  .icon-#{$label} {
+    width: map-get($icon, width);
+    height: map-get($icon, height);
+    background-image: url(map-get($icon, icon));
+  }
+}
+
+@each $label, $icon in $maskedIcons {
+  .icon-#{$label} {
+    width: map-get($icon, width);
+    height: map-get($icon, height);
+    background-color: map-get($icon, color);
+    -webkit-mask-image: url(map-get($icon, icon));
+    mask-image: url(map-get($icon, icon));
+  }
+}
+
+.icon.flip-x {
+  transform: scaleX(-1);
+}
+
+.icon.flip-y {
+  transform: rotate(180deg);
+}

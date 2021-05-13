@@ -49,6 +49,24 @@ export default {
     grid-template-rows: 272px;
     grid-gap: 16px;
     perspective: 1000px;
+
+    @media only screen and (max-width: 768px) {
+      height: 400px;
+      grid-template-columns: 200px 200px;
+      grid-auto-rows: 220px;
+      grid-template-rows: 220px;
+      grid-gap: 45px;
+      img {
+        margin-top: 20px;
+        width: 110px;
+        height: 110px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -74,6 +92,13 @@ export default {
     position: absolute;
     opacity: .7;
     visibility: visible;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-columns: 200px 200px;
+    grid-auto-rows: 220px;
+    grid-template-rows: 220px;
+    grid-gap: 45px;
   }
 }
 

@@ -260,5 +260,31 @@ export default {
         }
       }
     }
+
+
+    @media only screen and (max-width: 768px) {
+      padding: 0 32px;
+
+      .categories {
+        width: 80px;
+        height: 150px;
+        .list {
+          height: 150px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          &-item {
+            min-height: 30px;
+            box-sizing: content-box;
+            &:nth-child(2) {
+              margin: 0;
+            }
+            &::before {
+              display: none;
+            }
+          }
+        }
+      }
+    }
   }
 </style>

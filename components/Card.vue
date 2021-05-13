@@ -108,5 +108,22 @@ export default {
     &:hover {
       transform: scale(1.02) translateZ(1px);
     }
+
+    @media only screen and (max-width: 768px) {
+      padding: 16px;
+      &--content {
+        justify-content: center;
+        margin-right: -16px;
+        height: 100px;
+      }
+
+      &--footer {
+        margin-top: 50px;
+      }
+
+      .icon-card-cart {
+        transform: scale(1.3)
+      }
+    }
   }
 </style>

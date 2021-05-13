@@ -77,5 +77,19 @@ export default {
         line-height: 10px;
       }
     }
+
+    @media only screen and (max-width: 768px) {
+      padding: 0 32px;
+      margin-bottom: 10px;
+
+      .cart-btn {
+        .count {
+          padding-top: 3px;
+          width: 18px;
+          height: 18px;
+          font-size: 12px;
+        }
+      }
+    }
   }
 </style>

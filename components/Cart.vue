@@ -235,7 +235,7 @@ export default {
               margin-bottom: 16px;
             }
 
-            .icon {
+            .icon-trash {
               margin-left: auto;
               &:hover {
                 background: $dark-text;
@@ -249,6 +249,14 @@ export default {
           line-height: 23px;
           color: $hover-text;
           margin-bottom: 16px;
+        }
+      }
+
+      @media only screen and (max-width: 768px) {
+        padding: 26px 24px;
+        width: 330px;
+        .cart--container-products__list-item {
+          padding: 10px;
         }
       }
     }
@@ -295,7 +303,7 @@ export default {
       align-items: center;
       z-index: 1000;
       transition: .2s;
-      transform: translateX(103%);
+      transform: translateX(150%);
 
       &.done {
         transform: translateX(0);
@@ -330,7 +338,7 @@ export default {
 
   .no-products {
     width: 100%;
-    height: 150px;
+    height: 250px;
     display: flex;
     flex-direction: column;
 
@@ -342,6 +350,26 @@ export default {
 
     .go-btn {
       @include button
+    }
+    
+  }
+
+  @media only screen and (max-width: 768px) {
+    .text {
+      font-size: 18px;
+      line-height: 18px;
+    }
+
+    .icon-trash {
+      margin: 0;
+    }
+
+    .cart__success {
+      width: 92%;
+      margin-top: -10px;
+      &.done {
+        transform: translateX(-10px);
+      }
     }
   }
 

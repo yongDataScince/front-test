@@ -19,6 +19,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: "@/plugins/vClickOutside", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,7 +41,9 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "https://frontend-test.idaproject.com/api/"
+    baseURL: "https://frontend-test.idaproject.com/",
+    proxyHeaders: false,
+    credentials: false
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

@@ -2,7 +2,7 @@
   <div class="main__body">
     <div class="main__body--header">
       <div class="main__body--header-title">Каталог</div>
-      <div class="main__body--header-sort">
+      <div class="main__body--header-sort" v-click-outside="closeDropdown">
         <div
              class="sort-title"
              @click="toggleDrop">Сортировать по:
@@ -33,36 +33,52 @@
         </div>
       </div>
     </div>
+    <div class="main__body--content">
+      <div class="categories">
+        <ul class="list">
+          <li
+              @click="choiseCategory(c.id)"
+              :class="{ choised: c.id==category }"
+              class="list-item"
+              v-for="c in categories"
+              :key="c.id">
+            {{ c.name }}
+          </li>
+        </ul>
+      </div>
+
+      <ProductsList :loading="loading" :products="products"/>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import ProductsList from './ProductsList'
 
 export default {
   data: () => ({
     choiseSort: 0,
     sortList: ['По цене', 'По популярности'],
-    openDropdown: false
+    openDropdown: false,
+    loading: true
   }),
 
   computed: {
     ...mapState({
-      products: state => state.products.data
+      categories: state => state.categories.data,
+      category: state => state.category,
+      products: state => state.products
     })
   },
 
   mounted () {
-    this.getProducts()
+    this.setCategories()
+    this.toggleCategory(1)
   },
 
   methods: {
-    ...mapActions(['setAllProducts']),
-
-    getProducts () {
-      const res = this.setAllProducts()
-      this.products = res
-    },
+    ...mapActions(['setCategories', 'choiseCategory']),
 
     setSort (id) {
       this.openDropdown = false
@@ -71,7 +87,23 @@ export default {
 
     toggleDrop () {
       this.openDropdown = !this.openDropdown
+    },
+
+    toggleCategory (id) {
+      this.loading = true
+      this.choiseCategory(id)
+        .then(() => {
+          this.loading = false
+        })
+    },
+
+    closeDropdown () {
+      this.openDropdown = false
     }
+  },
+
+  components: {
+    ProductsList
   }
 }
 </script>
@@ -86,6 +118,7 @@ export default {
       height: 41px;
       width: 100%;
       display: flex;
+      margin-bottom: 32px;
       align-items: center;
       justify-content: space-between;
 
@@ -126,6 +159,7 @@ export default {
           transform: translateY(20px);
           opacity: 0;
           visibility: hidden;
+          z-index: 1000;
           .list {
             padding: 8px 0;
             margin: 0;
@@ -156,6 +190,42 @@ export default {
             transform: translateY(0px);
             opacity: 1;
             visibility: visible;
+          }
+        }
+      }
+    }
+
+    &--content {
+      width: 100%;
+      min-height: 100%;
+      display: flex;
+      align-items: flex-start;
+      .categories {
+        width: 170px;
+        min-height: 95px;
+        .list {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          &-item {
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 21px;
+            height: 21px;
+            color: $disable-test;
+
+            &:nth-child(2) {
+              margin: 16px 0;
+            }
+
+            &:hover {
+              color: $hover-text;
+            }
+
+            &.choised {
+              color: $dark-text;
+              text-decoration:underline;
+            }
           }
         }
       }

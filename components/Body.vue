@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import ProductsList from './ProductsList'
 
 export default {
@@ -79,10 +79,11 @@ export default {
 
   methods: {
     ...mapActions(['setCategories', 'choiseCategory']),
-
+    ...mapMutations(['FILTER_PRODUCTS']),
     setSort (id) {
       this.openDropdown = false
       this.choiseSort = id
+      this.FILTER_PRODUCTS(id === 1 ? 'price' : 'rating')
     },
 
     toggleDrop () {

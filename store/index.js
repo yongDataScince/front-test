@@ -26,6 +26,18 @@ export const mutations = {
     state.products = payload
   },
 
+  FILTER_PRODUCTS (state, payload) {
+    if (payload === 'price') {
+      state.products.sort((a, b) => {
+        return a.price < b.price ? 1 : -1
+      })
+    } else {
+      state.products.sort((a, b) => {
+        return a.rating < b.rating ? 1 : -1
+      })
+    }
+  },
+
   SET_CATEGORIES (state, payload) {
     state.categories = payload
   },

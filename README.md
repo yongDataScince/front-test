@@ -9,3 +9,6 @@
 * `yarn dev` - for develepment
 * `yarn build` and `yarn start` - for build app
 * `yarn generate` - for generate static project
+
+## Prevew
+![Alt text](assets/img/screen.png?raw=true "Title")

@@ -3,7 +3,7 @@
     <div class="cart--container">
       <div class="cart--container-header">
         <div class="title">Корзина</div>
-        <i class="icon icon-close" @click="toggle"/>
+        <i class="icon icon-close" @click="close"/>
       </div>
 
       <div class="no-products" v-if="count == 0">
@@ -11,7 +11,7 @@
           Пока что вы ничего не добавили <br>
           в корзину.
         </div>
-        <div class="go-btn" @click="toggle">
+        <div class="go-btn" @click="close">
           Перейти к выбору
         </div>
       </div>
@@ -35,8 +35,28 @@
               </li>
             </ul>
           </div>
+
+          <form @submit.prevent="submit" class="cart__form">
+            <div class="cart__form-title">Оформить заказ</div>
+            <input type="text" placeholder="Ваше имя" v-model="name">
+            <input type="text" placeholder="Телефон" v-model="phone" v-mask="'+7###-###-##-##'">
+            <input type="text" placeholder="Адрес" v-model="addr">
+
+            <button class="submit" :disabled="disable">
+              Отправить
+            </button>
+          </form>
       </div>
 
+      <div class="cart__success" :class="{ done }">
+        <div class="ok">👌🏻</div>
+        <div class="cart__success-title">
+          Заявка успешно отправлена
+        </div>
+        <div class="cart__success-text">
+          Вскоре наш менеджер свяжется с Вами
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,25 +65,53 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
+  data: () => ({
+    name: '',
+    phone: '',
+    addr: ''
+  }),
+
   computed: {
     ...mapState({
       open: state => state.cart.open,
       count: state => state.cart.count,
-      products: state => state.cart.products
-    })
+      products: state => state.cart.products,
+      done: state => state.cart.done
+    }),
+
+    disable () {
+      const conditional = this.name !== '' && this.phone !== '' && this.addr !== '' && this.phone.length === 15 // validation all fields
+      return !conditional
+    }
   },
 
   methods: {
     ...mapMutations({
-      toggle: 'cart/TOGGLE'
+      toggle: 'cart/TOGGLE',
+      close: 'cart/CLOSE'
     }),
-    ...mapActions(['removeProduct'])
+    ...mapActions(['removeProduct', 'clearCart']),
+
+    submit () {
+      this.clearCart()
+      this.name = ''
+      this.phone = ''
+      this.addr = ''
+    }
+  },
+
+  watch: {
+    name (e) {
+      this.name = e.replace(/[0-9]/g, '') // validation name -> can't write numbers
+    }
   }
 }
 </script>
 
 <style lang="scss">
   @import "@/assets/css/colors.scss";
+  @import "@/assets/css/main.scss";
+
   .cart {
     position: fixed;
     z-index: 1000;
@@ -88,6 +136,9 @@ export default {
       animation-delay: .3s;
       transform: translateX(100%);
       overflow-y: scroll;
+      overflow-x: hidden;
+      position: relative;
+
       &::-webkit-scrollbar {
         display: none !important;
       }
@@ -199,6 +250,26 @@ export default {
       }
     }
 
+    &__form {
+      margin-top: 32px;
+      width: 100%;
+
+      &-title {
+        font-size: 18px;
+        line-height: 23px;
+        margin-bottom: 16px;
+        color: $hover-text;
+      }
+
+      .submit {
+        @include button
+      }
+
+      input {
+        @include input
+      }
+    }
+
     &.open {
       opacity: 1;
       visibility: visible;
@@ -206,6 +277,45 @@ export default {
 
       .cart--container {
         transform: translateX(0);
+      }
+    }
+
+    &__success {
+      position: absolute;
+      top: 100px;
+      width: calc(100% - 90px);
+      height: calc(100% - 41px);
+      background: #FFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: .2s;
+      transform: translateX(103%);
+
+      &.done {
+        transform: translateX(0);
+      }
+
+      &-title {
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 31px;
+        color: #000;
+        margin-bottom: 2px;
+      }
+
+      &-text {
+        font-size: 16px;
+        line-height: 21px;
+        font-size: 16px;
+        line-height: 21px;
+      }
+
+      .ok {
+        font-size: 80px;
+        margin-bottom: 24px;
       }
     }
   }
@@ -223,17 +333,7 @@ export default {
     }
 
     .go-btn {
-      height: 50px;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
-      line-height: 21px;
-      color: #fff;
-      background: $dark-text;
-      border-radius: 8px;
-      cursor: pointer;
+      @include button
     }
   }
 </style>

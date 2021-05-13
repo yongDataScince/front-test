@@ -1,28 +1,28 @@
 export const state = () => ({
-  products: [],
-  categories: [],
-  category: 1
+  products: [],   // list of products
+  categories: [], // list of all categies
+  category: 1     // default category
 })
 
 export const actions = {
-  async setAllProducts ({ commit }) {
-    const data = await this.$axios.get('/api/product?category=3')
-    commit('SET_PRODUCTS', data)
-  },
-
-  async choiseCategory ({ commit }, payload = 1) {
+  async choiseCategory ({ commit }, payload = 1) {    // load products with category
     const data = await this.$axios.get(`/api/product?category=${payload}`)
     commit('CHOISE_CATEGORY', { data: data.data, category: payload })
   },
 
-  async setCategories ({ commit }) {
+  async setCategories ({ commit }) {    // load all categories
     const data = await this.$axios.get('/api/product-category')
     commit('SET_CATEGORIES', data)
   },
 
-  removeProduct ({ commit }, payload) {
+  removeProduct ({ commit }, payload) { // remove product from cart with "id"
     commit('cart/REMOVE_PRODUCT', payload, { root: true })
     commit('REMOVE_FROM_CART', payload)
+  },
+
+  clearCart ({ commit }) {  // clear cart after submiting
+    commit('cart/CLEAR_CART', null, { root: true })
+    commit('CLEAR_CART')
   }
 }
 
@@ -61,6 +61,13 @@ export const mutations = {
       if (i.id === payload.id) {
         i.inCart = false
       }
+      return i
+    })
+  },
+
+  CLEAR_CART (state) {
+    state.products.map((i) => {
+      i.inCart = false
       return i
     })
   }

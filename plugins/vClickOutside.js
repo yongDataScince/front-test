@@ -1,3 +1,5 @@
+/* Plugin for phone mask */
+
 import Vue from "vue"
 import vClickOutside from "v-click-outside"
 

@@ -1,15 +1,20 @@
 <template>
   <div class="main__body">
     <div class="main__body--header">
-      <div class="main__body--header-title">Каталог</div>
-      <div class="main__body--header-sort" v-click-outside="closeDropdown">
+      <div class="main__body--header-title">
+        Каталог
+      </div>
+
+      <div v-click-outside="closeDropdown" class="main__body--header-sort">
+
         <div
-             class="sort-title"
-             @click="toggleDrop">Сортировать по:
+          class="sort-title"
+          @click="toggleDrop">
+          Сортировать по:
           <span class="sort-text">{{ choiseSort?'цене':'популярности' }}</span>
           <i
             class="icon icon-little-chevron"
-            :class=" {'flip-y': openDropdown} "></i>
+            :class=" {'flip-y': openDropdown} " />
         </div>
 
         <div
@@ -80,6 +85,7 @@ export default {
   methods: {
     ...mapActions(['setCategories', 'choiseCategory']),
     ...mapMutations(['FILTER_PRODUCTS']),
+
     setSort (id) {
       this.openDropdown = false
       this.choiseSort = id
@@ -95,6 +101,7 @@ export default {
       this.choiseCategory(id)
         .then(() => {
           this.loading = false
+          this.FILTER_PRODUCTS('rating')
         })
     },
 

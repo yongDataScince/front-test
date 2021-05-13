@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Cart />
     <Header />
     <Body />
   </div>
@@ -8,11 +9,13 @@
 <script>
 import Header from '@/components/Header'
 import Body from '@/components/Body'
+import Cart from '@/components/Cart'
 
 export default {
   components: {
     Header,
-    Body
+    Body,
+    Cart
   }
 }
 </script>

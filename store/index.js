@@ -18,6 +18,11 @@ export const actions = {
   async setCategories ({ commit }) {
     const data = await this.$axios.get('/api/product-category')
     commit('SET_CATEGORIES', data)
+  },
+
+  removeProduct ({ commit }, payload) {
+    commit('cart/REMOVE_PRODUCT', payload, { root: true })
+    commit('REMOVE_FROM_CART', payload)
   }
 }
 
@@ -43,7 +48,20 @@ export const mutations = {
   },
 
   CHOISE_CATEGORY (state, payload) {
+    payload.data.map((i) => {
+      i.inCart = false
+      return i
+    })
     state.category = payload.category
     state.products = payload.data
+  },
+
+  REMOVE_FROM_CART (state, payload) {
+    state.products.map((i) => {
+      if (i.id === payload.id) {
+        i.inCart = false
+      }
+      return i
+    })
   }
 }

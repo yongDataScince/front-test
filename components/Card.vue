@@ -2,11 +2,11 @@
   <div class="product-card">
     <div class="product-card--content">
       <span class="rating">
-        <i class="icon icon-star"></i>
+        <i class="icon icon-star" />
         {{data.rating}}
       </span>
       <img :src="'https://frontend-test.idaproject.com'+this.data.photo" alt="">
-      <i class="icon icon-card-cart"></i>
+      <i class="icon icon-card-cart" @click="add"/>
     </div>
     <div class="product-card--footer">
       <div class="name">{{data.name}}</div>
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 
 export default {
   props: {
@@ -25,7 +26,28 @@ export default {
     }
   },
 
+  data: () => ({
+    inCart: false
+  }),
+
+  computed: {
+    ...mapState({
+      products: state => state.cart.products
+    })
+  },
+
   methods: {
+    ...mapActions({
+      addProduct: 'cart/addProduct'
+    }),
+
+    add () {
+      if (this.data.inCart) {
+        console.log('IN Cart!!!!')
+      } else {
+        this.addProduct(this.data)
+      }
+    }
   }
 }
 </script>
@@ -52,6 +74,10 @@ export default {
         font-size: 10px;
         line-height: 13px;
         align-items: center;
+      }
+
+      .icon-card-cart:hover {
+        background: $dark-text;
       }
     }
 

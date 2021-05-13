@@ -4,13 +4,31 @@
       TestList
     </div>
     <button class="cart-btn">
-      <div class="count">
-        3
+      <div class="count" v-if="count > 0">
+        {{ count }}
       </div>
-      <i class="icon icon-cart"></i>
+      <i class="icon icon-cart" @click="toggle"/>
     </button>
   </header>
 </template>
+
+<script>
+import { mapState, mapMutations } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState({
+      count: state => state.cart.count
+    })
+  },
+
+  methods: {
+    ...mapMutations({
+      toggle: 'cart/TOGGLE'
+    })
+  }
+}
+</script>
 
 <style lang="scss">
 @import "@/assets/css/colors.scss";

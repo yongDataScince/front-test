@@ -42,7 +42,7 @@
       <div class="categories">
         <ul class="list">
           <li
-              @click="choiseCategory(c.id)"
+              @click="toggleCategory(c.id)"
               :class="{ choised: c.id==category }"
               class="list-item"
               v-for="c in categories"
@@ -80,11 +80,15 @@ export default {
   mounted () {
     this.setCategories()
     this.toggleCategory(1)
+    this.SET_STORAGE()
   },
 
   methods: {
     ...mapActions(['setCategories', 'choiseCategory']),
-    ...mapMutations(['FILTER_PRODUCTS']),
+    ...mapMutations({
+        FILTER_PRODUCTS: 'FILTER_PRODUCTS', 
+        SET_STORAGE: 'cart/SET_STORAGE'
+      }),
 
     setSort (id) {
       this.openDropdown = false
@@ -221,6 +225,18 @@ export default {
             line-height: 21px;
             height: 21px;
             color: $disable-test;
+            position: relative;
+
+            &::before {
+              position: absolute;
+              content: '';
+              width: 0;
+              height: 1px;
+              background: $disable-test;
+              bottom: 2px;
+              left: 0;
+              transition: .2s;
+            }
 
             &:nth-child(2) {
               margin: 16px 0;
@@ -228,11 +244,17 @@ export default {
 
             &:hover {
               color: $hover-text;
+              &::before {
+                width: 50%;
+              }
             }
 
             &.choised {
               color: $dark-text;
               text-decoration:underline;
+              &::before {
+                display: none;
+              }
             }
           }
         }

@@ -18,7 +18,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapState({
-      count: state => state.cart.count
+      count: state => state.cart.products.length
     })
   },
 

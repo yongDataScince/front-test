@@ -6,7 +6,7 @@
         <i class="icon icon-close" @click="close"/>
       </div>
 
-      <div class="no-products" v-if="count == 0">
+      <div class="no-products" v-if="products.length == 0">
         <div class="text">
           Пока что вы ничего не добавили <br>
           в корзину.
@@ -39,7 +39,7 @@
           <form @submit.prevent="submit" class="cart__form">
             <div class="cart__form-title">Оформить заказ</div>
             <input type="text" placeholder="Ваше имя" v-model="name">
-            <input type="text" placeholder="Телефон" v-model="phone" v-mask="'+7###-###-##-##'">
+            <input type="text" placeholder="Телефон" v-model="phone" v-mask="'+7(###)-###-##-##'">
             <input type="text" placeholder="Адрес" v-model="addr">
 
             <button class="submit" :disabled="disable">
@@ -49,7 +49,7 @@
       </div>
 
       <div class="cart__success" :class="{ done }">
-        <div class="ok">👌🏻</div>
+        <div class="ok" :class="{ done }">👌🏻</div>
         <div class="cart__success-title">
           Заявка успешно отправлена
         </div>
@@ -74,13 +74,12 @@ export default {
   computed: {
     ...mapState({
       open: state => state.cart.open,
-      count: state => state.cart.count,
       products: state => state.cart.products,
       done: state => state.cart.done
     }),
 
     disable () {
-      const conditional = this.name !== '' && this.phone !== '' && this.addr !== '' && this.phone.length === 15 // validation all fields
+      const conditional = this.name !== '' && this.phone !== '' && this.addr !== '' && this.phone.length === 17 // validation all fields
       return !conditional
     }
   },
@@ -157,6 +156,11 @@ export default {
 
         .icon {
           margin-left: auto;
+          transition: .2s;
+
+          &:hover {
+            transform: scale(1.2);
+          }
         }
       }
 
@@ -165,7 +169,6 @@ export default {
 
         .list-container {
           min-height: 120px;
-          max-height: 480px;
           width: 100%;
         }
 
@@ -311,11 +314,16 @@ export default {
         line-height: 21px;
         font-size: 16px;
         line-height: 21px;
+        color: $hover-text;
       }
 
       .ok {
         font-size: 80px;
         margin-bottom: 24px;
+
+        &.done {
+          animation: done 1s ease-in;
+        }
       }
     }
   }
@@ -334,6 +342,20 @@ export default {
 
     .go-btn {
       @include button
+    }
+  }
+
+  @keyframes done {
+    0% {
+      transform: scale(.2) rotate(40deg);
+    }
+
+    50% {
+      transform: scale(1.2) rotate(-20deg);
+    }
+
+    100% {
+      transform: scale(1) rotate(0deg);
     }
   }
 </style>

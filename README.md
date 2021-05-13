@@ -1,20 +1,11 @@
 # front-test
 
-## Build Setup
+## Download app
+* `git clone https://github.com/yongDataScince/front-test`
+* `cd front-test`
+* `yarn install` or `npm install` - for install dependences
 
-```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Run app 
+* `yarn dev` - for develepment
+* `yarn build` and `yarn start` - for build app
+* `yarn generate` - for generate static project

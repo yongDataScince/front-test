@@ -27,7 +27,8 @@ export default {
   },
 
   data: () => ({
-    inCart: false
+    inCart: false,
+    show: false
   }),
 
   computed: {
@@ -43,7 +44,7 @@ export default {
 
     add () {
       if (this.data.inCart) {
-        console.log('IN Cart!!!!')
+        console.log("ERR", this.data.inCart)
       } else {
         this.addProduct(this.data)
       }
@@ -59,6 +60,8 @@ export default {
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
     padding: 16px;
+    transition: .2s;
+    perspective: 100px;
 
     &--content {
       width: 100%;
@@ -100,6 +103,10 @@ export default {
         font-size: 14px;
         line-height: 18px;
       }
+    }
+
+    &:hover {
+      transform: scale(1.02) translateZ(1px);
     }
   }
 </style>

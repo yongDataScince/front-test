@@ -10,5 +10,5 @@
 * `yarn build` and `yarn start` - for build app
 * `yarn generate` - for generate static project
 
-## Prevew
+## Preview
 ![Alt text](assets/img/screen.png?raw=true "Title")

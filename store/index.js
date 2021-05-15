@@ -5,9 +5,15 @@ export const state = () => ({
 })
 
 export const actions = {
-  async choiseCategory ({ commit }, payload = 1) { // choise category and load data
-    const data = await this.$axios.get(`/api/product?category=${payload}`)
-    commit('CHOISE_CATEGORY', { data: data.data, category: payload })
+  async choiseCategory ({ commit }, payload = 1) {
+    const data = await this.$axios.get(`/api/product?category=${payload}`) // choise category and load data
+    let storeData = {
+      data: data.data,
+      category: payload
+    }
+    this.$auth.$storage.setLocalStorage('data', data.data)
+    this.$auth.$storage.setLocalStorage('category', payload)
+    commit('CHOISE_CATEGORY', storeData)
   },
 
   async setCategories ({ commit }) {    // load all categories
@@ -21,6 +27,7 @@ export const actions = {
   },
 
   removeProduct ({ commit }, payload) { // remove product from cart with "id"
+
     commit('cart/REMOVE_PRODUCT', payload, { root: true })
     commit('REMOVE_FROM_CART', payload)
   },
@@ -59,6 +66,7 @@ export const mutations = {
     })
     state.category = payload.category
     state.products = payload.data
+    console.log(state)
   },
 
   REMOVE_FROM_CART (state, payload) {
@@ -68,7 +76,7 @@ export const mutations = {
       }
       return i
     })
-    this.$auth.$storage.setLocalStorage('catProducts', state.products)
+    this.$auth.$storage.setLocalStorage('data', state.products)
   },
 
   CLEAR_CART (state) {

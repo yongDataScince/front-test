@@ -6,7 +6,7 @@
         {{data.rating}}
       </span>
       <img :src="'https://frontend-test.idaproject.com'+this.data.photo" alt="">
-      <i class="icon icon-card-cart" @click="add"/>
+      <i class="icon icon-card-cart" :class="{ incart : data.inCart }" @click="add"/>
     </div>
     <div class="product-card--footer">
       <div class="name">{{data.name}}</div>
@@ -77,6 +77,10 @@ export default {
         font-size: 10px;
         line-height: 13px;
         align-items: center;
+      }
+
+      .icon-card-cart.incart {
+        background: #000;
       }
 
       .icon-card-cart:hover {
